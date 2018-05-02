@@ -1,0 +1,8 @@
+.header-nightsky {
+    color: white;
+    background: url("../../assets/s_fotakom.jpg") no-repeat;
+    background-color: black;
+    background-size: cover;
+    /*background-position: top;*/
+    /*padding-bottom: 30%;*/
+}

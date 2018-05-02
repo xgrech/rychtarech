@@ -1,0 +1,511 @@
+<div class="header-nightsky">
+    <nav class="navbar navbar-default">
+        <div class="container">
+            <a class="navbar-brand" href="#">{{this.actual_page}}</a>
+            <div class="navbar-header">
+                <button (click)="onToogleMenu()" type="button" class="navbar-toggle" data-toggle="collapse"
+                        data-target="#myNavbar">
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+            </div>
+            <div [ngClass]="{'collapse': toogleMenu === false}" class="navbar-collapse w3-animate-right">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="dropdown" (click)="ruter('uvod')"><a routerLink="/admin">UVOD</a></li>
+                    <li class="dropdown" (click)="ruter('aktuality')"><a routerLink="/admin">AKTUALITY</a></li>
+                    <li class="dropdown" (click)="ruter('blog')"><a routerLink="/admin">BLOG</a></li>
+                    <li class="dropdown" (click)="ruter('linky')"><a routerLink="/admin">LINKY</a></li>
+                    <li class="dropdown" (click)="ruter('mailbox')"><a routerLink="/admin">MAILBOX</a></li>
+                    <li *ngIf="locker" class="dropdown" (click)="zamok()"><a style="margin-left: 5em">
+                        <span class="glyphicon glyphicon-chevron-left"></span> Odhlásiť <span
+                            class="glyphicon glyphicon-chevron-right"></span></a></li>
+                    <li *ngIf="!locker" class="dropdown" routerLink=""><a style="margin-left: 5em">NÁVRAT</a></li>
+                </ul>
+
+            </div>
+            <p style="color: red;">{{this.error}}</p>
+        </div>
+    </nav>
+</div>
+
+<div *ngIf="locker">
+    <div class="clas1">
+        <div class="container">
+
+
+            <br>
+            <br>
+
+
+            <div *ngIf="active_page == 'uvod'" class="w3-card-4"
+                 style="background-color: white; width: 80%; margin: auto">
+                <div class="w3-container" [ngClass]="{'w3-indigo':this.edit_mode == true}"
+                     style="color: white; background-color: black">
+                    <h2>Komentáre slávnych osobností</h2>
+                    <h2 *ngIf="this.edit_mode == true" class="w3-right">Edit mode</h2>
+
+                </div>
+                <form class="w3-container" action="">
+                    <p>
+                        <label class="w3-text-black"><b>Meno</b></label>
+                        <input class="w3-input w3-border w3-sand" name="ref_meno" type="text"
+                               [(ngModel)]="this.referencia.meno">
+                    </p>
+                    <p>
+                        <label class="w3-text-black"><b>Photo URL (len webové zdroje / URL)</b></label>
+                        <input class="w3-input w3-border w3-sand" name="ref_url" type="text"
+                               [(ngModel)]="this.referencia.photo">
+                    </p>
+                    <p>
+                        <label class="w3-text-black"><b>Text SK</b></label>
+                        <input class="w3-input w3-border w3-sand" name="ref_text" type="text"
+                               [(ngModel)]="this.referencia.text_sk">
+                    </p>
+                    <p>
+                        <label class="w3-text-black"><b>Text EN</b></label>
+                        <input class="w3-input w3-border w3-sand" name="ref_text" type="text"
+                               [(ngModel)]="this.referencia.text_en">
+                    </p>
+                    <p>
+                        <label class="w3-text-black"><b>Text NL</b></label>
+                        <input class="w3-input w3-border w3-sand" name="ref_text" type="text"
+                               [(ngModel)]="this.referencia.text_nl">
+                    </p>
+                    <p>
+                        <label class="w3-text-black"><b>Povolanie SK</b></label>
+                        <input class="w3-input w3-border w3-sand" name="ref_povolanie" type="text"
+                               [(ngModel)]="this.referencia.povolanie_sk"></p>
+                    <p>
+                    <p>
+                        <label class="w3-text-black"><b>Povolanie EN</b></label>
+                        <input class="w3-input w3-border w3-sand" name="ref_povolanie" type="text"
+                               [(ngModel)]="this.referencia.povolanie_en"></p>
+                    <p>
+                    <p>
+                        <label class="w3-text-black"><b>Povolanie NL</b></label>
+                        <input class="w3-input w3-border w3-sand" name="ref_povolanie" type="text"
+                               [(ngModel)]="this.referencia.povolanie_nl"></p>
+                    <p>
+                        <button class="w3-btn w3-brown" (click)="saveRef()">Save</button>
+                        <button *ngIf="edit_mode == true" class="w3-btn w3-indigo" (click)="closeEdit()">Zavri edit
+                            mode
+                        </button>
+
+                    </p>
+                </form>
+                <div *ngIf="this.edit_mode == false" class="w3-container">
+                    <h2>Aktuálne komentáre</h2>
+                    <p>Kliknutím na X zmažete komentár:</p>
+                    <ul class="w3-ul w3-card-4" style="margin-bottom: 3em">
+                        <li *ngFor="let ref of this.referencie" class="w3-bar" (click)="edit_mode_reff(ref)">
+                            <span (click)="zmazRef(ref)"
+                                  class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>
+                            <img src="{{ref.photo}}" alt="XX" class="w3-bar-item w3-circle w3-hide-small"
+                                 style="width:85px">
+                            <div class="w3-bar-item">
+                                <span class="w3-large">{{ref.meno}}</span><br>
+                                <span>{{ref.povolanie}}</span>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+
+            <!--druha sekcia-->
+
+            <div *ngIf="active_page === 'blog'" class="w3-card-4"
+                 style="background-color: white; width: 80%; margin: auto">
+                <div class="w3-container" [ngClass]="{'w3-indigo':this.edit_mode == true}"
+                     style="color: white; background-color: black">
+                    <h2>Blog</h2>
+                    <h2 *ngIf="this.edit_mode == true" class="w3-right">Edit mode</h2>
+
+                </div>
+                <form class="w3-container" action="">
+                    <p>
+                        <label class="w3-text-black"><b>Názov</b></label>
+                        <input class="w3-input w3-border w3-sand" name="blog_nazov" type="text"
+                               [(ngModel)]="this.clanok.title">
+                    </p>
+                    <p>
+                        <label class="w3-text-black"><b>Popis</b></label>
+                        <input class="w3-input w3-border w3-sand" name="blog_popis" type="text"
+                               [(ngModel)]="this.clanok.title_description">
+                    </p>
+                    <p>
+                        <label class="w3-text-black"><b>Dátum</b></label>
+                        <input class="w3-input w3-border w3-sand" name="blog_datum" type="text"
+                               [(ngModel)]="this.clanok.date">
+                    </p>
+                    <p>
+                        <label class="w3-text-black"><b>Titulná fotka</b></label>
+                        <input class="w3-input w3-border w3-sand" name="blog_tit_foto" type="text"
+                               [(ngModel)]="this.clanok.titulna_fotka">
+                    </p>
+                    <p>
+                        <label class="w3-text-black"><b>Perex</b></label>
+                        <input class="w3-input w3-border w3-sand" style="height: 50px" name="blog_perex" type="text"
+                               [(ngModel)]="this.clanok.perex"></p>
+                    <p>
+                    <p>
+                        <label class="w3-text-black "><b>Obsah - 1.odsek</b></label>
+                        <textarea class="w3-input w3-border w3-sand form-control" name="text1" rows="8"
+                                  [(ngModel)]="this.clanok.obsah[0]"></textarea>
+                    </p>
+                    <p>
+                        <label class="w3-text-black "><b>Obsah - 2.odsek</b></label>
+                        <textarea class="w3-input w3-border w3-sand form-control" name="text2" rows="8"
+                                  [(ngModel)]="this.clanok.obsah[1]">{{this.clanok.obsah[1]}}</textarea>
+                    </p>
+                    <p>
+                        <label class="w3-text-black "><b>Obsah - 3.odsek</b></label>
+                        <textarea class="w3-input w3-border w3-sand form-control" name="text3" rows="8"
+                                  [(ngModel)]="this.clanok.obsah[2]">{{this.clanok.obsah[2]}}</textarea>
+                    </p>
+                    <label class="w3-text-black"><b>Fotky</b></label>
+                    <p>- perex -</p>
+                    <input class="w3-input w3-border w3-sand" name="blog_foto1"
+                           placeholder="1. foto - url" type="text"
+                           [(ngModel)]="this.clanok.fotky[0]" style="margin-bottom: 2px">
+                    <input class="w3-input w3-border w3-sand" name="blog_foto2"
+                           placeholder="2. foto - url" type="text"
+                           [(ngModel)]="this.clanok.fotky[1]" style="margin-bottom: 2px">
+                    <p>- Odsek 1. -</p>
+                    <input class="w3-input w3-border w3-sand" name="blog_foto3"
+                           placeholder="3. foto - url" type="text"
+                           [(ngModel)]="this.clanok.fotky[2]" style="margin-bottom: 2px">
+                    <input class="w3-input w3-border w3-sand" name="blog_foto4"
+                           placeholder="4. foto - url" type="text"
+                           [(ngModel)]="this.clanok.fotky[3]" style="margin-bottom: 2px">
+                    <input class="w3-input w3-border w3-sand" name="blog_foto5"
+                           placeholder="5. foto - url" type="text"
+                           [(ngModel)]="this.clanok.fotky[4]" style="margin-bottom: 2px">
+                    <p>- Odsek 2. -</p>
+                    <input class="w3-input w3-border w3-sand" name="blog_foto6"
+                           placeholder="6. foto - url" type="text"
+                           [(ngModel)]="this.clanok.fotky[5]" style="margin-bottom: 2px">
+                    <input class="w3-input w3-border w3-sand" name="blog_foto7"
+                           placeholder="7. foto - url" type="text"
+                           [(ngModel)]="this.clanok.fotky[6]" style="margin-bottom: 2px">
+                    <input class="w3-input w3-border w3-sand" name="blog_foto8"
+                           placeholder="8. foto - url" type="text"
+                           [(ngModel)]="this.clanok.fotky[7]" style="margin-bottom: 2px">
+                    <p>- Odsek 3. -</p>
+                    <input class="w3-input w3-border w3-sand" name="blog_foto9"
+                           placeholder="9. foto - url" type="text"
+                           [(ngModel)]="this.clanok.fotky[8]" style="margin-bottom: 2px">
+                    <input class="w3-input w3-border w3-sand" name="blog_foto10"
+                           placeholder="10. foto - url" type="text"
+                           [(ngModel)]="this.clanok.fotky[9]" style="margin-bottom: 2px">
+                    <input class="w3-input w3-border w3-sand" name="blog_foto11"
+                           placeholder="11. foto - url" type="text"
+                           [(ngModel)]="this.clanok.fotky[10]" style="margin-bottom: 2px">
+                    <br>
+                    <!--<button (click)="deleteFotoLink()" class="w3-button w3-black w3-right" disabled-->
+                    <!--style="margin-right: 5px">- -->
+                    <!--</button>-->
+                    <!--<button (click)="addFotoLink()" class="w3-button w3-black w3-right" disabled-->
+                    <!--style="margin-right: 5px">+-->
+                    <!--</button>-->
+                    <br>
+
+                    <p>
+                        <button class="w3-btn w3-brown" (click)="saveClanok()">Save</button>
+                        <button *ngIf="edit_mode == true" class="w3-btn w3-indigo" (click)="closeEdit()">Zavri edit
+                            mode
+                        </button>
+
+                    </p>
+                    <hr>
+                </form>
+                <div *ngIf="this.edit_mode == false" class="w3-container">
+                    <h2>Aktuálne články</h2>
+                    <p>Kliknutím na X zmažete článok:</p>
+                    <div *ngFor="let clk of this.clanky" >
+                        <ul class="w3-ul w3-card-4" style="margin-bottom: 3em;padding-bottom: 1em">
+                            <li class="w3-bar">
+                        <span (click)="edit_mode_clanok(clk)"
+                              class="w3-bar-item w3-button w3-white w3-xmedium w3-right">edit</span>
+                                <span class="w3-bar-item w3-white w3-right w3-xmedium">|</span>
+                                <span (click)="zmazClanok(clk)"
+                                      class="w3-bar-item w3-button w3-white w3-xmedium w3-right">delete</span>
+                                <img src="{{clk.titulna_fotka}}" alt="XX" class="w3-bar-item w3-circle w3-hide-small"
+                                     style="width:85px">
+                                <div class="w3-bar-item">
+                                    <span class="w3-large">{{clk.title}}</span><br>
+                                    <span>{{clk.title_description}}</span>
+                                </div>
+
+                                <br>
+                                <br>
+                                <br>
+                            </li>
+                            <ul class="w3-ul w3-card-4" style="margin: 1em; width: 90%">
+                                <li *ngFor="let comm of clk.komenty" class="w3-bar">
+                        <span (click)="zmazKomment(comm,clk)"
+                              class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>
+                                    <div class="w3-bar-item">
+                                        <span class="w3-large">{{comm.meno}}</span><br>
+                                        <span>{{comm.obsah}}</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+
+            <div *ngIf="active_page === 'aktuality'" class="w3-card-4"
+                 style="background-color: white; width: 80%; margin: auto">
+                <div class="w3-container" [ngClass]="{'w3-indigo':this.edit_mode == true}"
+                     style="color: white; background-color: black">
+                    <h2>Aktuality</h2>
+                    <h2 *ngIf="this.edit_mode == true" class="w3-right">Edit mode</h2>
+
+                </div>
+                <form class="w3-container" action="">
+                    <p>
+                        <label class="w3-text-black"><b>Názov</b></label>
+                        <input class="w3-input w3-border w3-sand" name="akt_nazov" type="text"
+                               [(ngModel)]="this.aktualita.title">
+                    </p>
+                    <p>
+                        <label class="w3-text-black"><b>Popis</b></label>
+                        <input class="w3-input w3-border w3-sand" name="akt_popis" type="text"
+                               [(ngModel)]="this.aktualita.title_description">
+                    </p>
+                    <p>
+                        <label class="w3-text-black"><b>Dátum</b></label>
+                        <input class="w3-input w3-border w3-sand" name="akt_datum" type="text"
+                               [(ngModel)]="this.aktualita.date">
+                    </p>
+                    <p>
+                        <label class="w3-text-black"><b>Titulná fotka</b></label>
+                        <input class="w3-input w3-border w3-sand" name="akt_tut_foto" type="text"
+                               [(ngModel)]="this.aktualita.titulna_fotka">
+                    </p>
+                    <p>
+                        <label class="w3-text-black"><b>Perex</b></label>
+                        <input class="w3-input w3-border w3-sand" style="height: 50px" name="akt_perex" type="text"
+                               [(ngModel)]="this.aktualita.perex"></p>
+                    <p>
+                    <p>
+                        <label class="w3-text-black "><b>Obsah - 1.Foto</b></label>
+                        <textarea class="w3-input w3-border w3-sand form-control" name="textact1" rows="8"
+                                  [(ngModel)]="this.aktualita.obsah[0]"></textarea>
+                    </p>
+                    <p>
+                        <label class="w3-text-black "><b>Obsah - 2.Foto</b></label>
+                        <textarea class="w3-input w3-border w3-sand form-control" name="textact2" rows="8"
+                                  [(ngModel)]="this.aktualita.obsah[1]"></textarea>
+                    </p>
+                    <p>
+                        <label class="w3-text-black "><b>Obsah - 3.Foto</b></label>
+                        <textarea class="w3-input w3-border w3-sand form-control" name="textact3" rows="8"
+                                  [(ngModel)]="this.aktualita.obsah[2]"></textarea>
+                    </p>
+                    <p>
+                        <label class="w3-text-black"><b>Fotky</b></label>
+                        <input class="w3-input w3-border w3-sand" name="akt_foto1"
+                               placeholder="1. foto - url" type="text"
+                               [(ngModel)]="this.aktualita.fotky[0]" style="margin-bottom: 2px">
+                        <input class="w3-input w3-border w3-sand" name="akt_foto2"
+                               placeholder="2. foto - url" type="text"
+                               [(ngModel)]="this.aktualita.fotky[1]" style="margin-bottom: 2px">
+                        <input class="w3-input w3-border w3-sand" name="akt_foto3"
+                               placeholder="2. foto - url" type="text"
+                               [(ngModel)]="this.aktualita.fotky[2]" style="margin-bottom: 2px">
+                        <br>
+                        <!--<button (click)="deleteFotoLink()" class="w3-button w3-black w3-right" disabled-->
+                        <!--style="margin-right: 5px">- -->
+                        <!--</button>-->
+                        <!--<button (click)="addFotoLink()" class="w3-button w3-black w3-right" disabled-->
+                        <!--style="margin-right: 5px">+-->
+                        <!--</button>-->
+                        <br>
+                    </p>
+                    <p>
+                        <button class="w3-btn w3-brown" (click)="saveAktualita()">Save</button>
+                        <button *ngIf="edit_mode == true" class="w3-btn w3-indigo" (click)="closeEdit()">Zavri edit
+                            mode
+                        </button>
+                    </p>
+                    <hr>
+                </form>
+                <div *ngIf="this.edit_mode == false" class="w3-container">
+                    <h2>Aktuálne aktuality</h2>
+                    <p>Kliknutím na X zmažete aktualitu:</p>
+                    <div *ngFor="let akt of this.aktuality" >
+                        <ul class="w3-ul w3-card-4" style="margin-bottom: 3em;padding-bottom: 1em">
+                            <li class="w3-bar">
+                                <span (click)="edit_mode_aktualita(akt)"
+                                      class="w3-bar-item w3-button w3-white w3-xmedium w3-right">edit</span>
+                                <span class="w3-bar-item w3-white w3-right w3-xmedium">|</span>
+                                <span (click)="zmazAktualita(akt)"
+                                      class="w3-bar-item w3-button w3-white w3-xmedium w3-right">delete</span>
+                                <img src="{{akt.titulna_fotka}}" alt="XX" class="w3-bar-item w3-circle w3-hide-small"
+                                     style="width:85px">
+                                <div class="w3-bar-item">
+                                    <span class="w3-large">{{akt.title}}</span><br>
+                                    <span>{{akt.title_description}}</span>
+                                </div>
+
+                                <br>
+                                <br>
+                                <br>
+                            </li>
+                            <ul class="w3-ul w3-card-4" style="margin: 1em; width: 90%">
+                                <li *ngFor="let comm of akt.komenty" class="w3-bar">
+                        <span (click)="zmazKommentAkt(comm,akt)"
+                              class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>
+                                    <div class="w3-bar-item">
+                                        <span class="w3-large">{{comm.meno}}</span><br>
+                                        <span>{{comm.obsah}}</span>
+                                    </div>
+                                </li>
+                            </ul>
+                        </ul>
+                    </div>
+                </div>
+                <hr>
+            </div>
+
+            <div *ngIf="active_page === 'linky'" class="w3-card-4"
+                 style="background-color: white; width: 80%; margin: auto">
+                <div class="w3-container" [ngClass]="{'w3-indigo':this.edit_mode == true}"
+                     style="color: white; background-color: black">
+                    <h2>Linky</h2>
+                    <h2 *ngIf="this.edit_mode == true" class="w3-right">Edit mode</h2>
+                </div>
+                <form class="w3-container" action="">
+                    <p>
+                        <label class="w3-text-black"><b>Názov</b></label>
+                        <input class="w3-input w3-border w3-sand" name="link_nazov" type="text"
+                               [(ngModel)]="this.link.title">
+                    </p>
+                    <p>
+                        <label class="w3-text-black"><b>Dátum</b></label>
+                        <input class="w3-input w3-border w3-sand" name="link_datum" type="text"
+                               [(ngModel)]="this.link.datum">
+                    </p>
+                    <p>
+                        <label class="w3-text-black "><b>Obsah</b></label>
+                        <textarea class="w3-input w3-border w3-sand form-control" rows="8"
+                                  (change)="doLinkObsahToVal($event)"></textarea>
+                    </p>
+                    <p>
+                        <label class="w3-text-black"><b>Titulna fotka</b></label>
+                        <input class="w3-input w3-border w3-sand" name="link_tit_foto" type="text"
+                               [(ngModel)]="this.link.title_foto">
+                    </p>
+                    <p>
+                        <label class="w3-text-black"><b>Linka</b></label>
+                        <input class="w3-input w3-border w3-sand" name="link_linka" type="text"
+                               [(ngModel)]="this.link.link">
+                    </p>
+
+                    <p>
+                        <button class="w3-btn w3-brown" (click)="saveLinka()">Save</button>
+                        <button *ngIf="edit_mode == true" class="w3-btn w3-indigo" (click)="closeEdit()">Zavri edit
+                            mode
+                        </button>
+
+                    </p>
+                    <hr>
+                </form>
+                <hr>
+
+                <div *ngIf="this.edit_mode == false" class="w3-container">
+                    <h2>Aktuálne Linky</h2>
+                    <p>Kliknutím na X zmažete linku:</p>
+                    <div *ngFor="let link of this.linky" (click)="edit_mode_linka(link)">
+                        <ul class="w3-ul w3-card-4" style="margin-bottom: 3em;padding-bottom: 1em">
+                            <li class="w3-bar">
+                        <span (click)="zmazLinka(link)"
+                              class="w3-bar-item w3-button w3-white w3-xlarge w3-right">×</span>
+                                <button (click)="swap_up(link, this.linky)"
+                                        class="w3-bar-item w3-button w3-white w3-xlarge w3-right glyphicon glyphicon-arrow-up"
+                                        disabled></button>
+                                <button (click)="swap_up(link, this.linky)"
+                                        class="w3-bar-item w3-button w3-white w3-xlarge w3-right glyphicon glyphicon-arrow-down"
+                                        disabled></button>
+
+                                <img src="{{link.title_foto}}" alt="XX" class="w3-bar-item w3-circle w3-hide-small"
+                                     style="width:85px">
+                                <div class="w3-bar-item">
+                                    <span class="w3-large">{{link.title}}</span><br>
+                                    <span>{{link.obsah}}</span>
+                                </div>
+
+                                <br>
+                                <br>
+                                <br>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
+    </div>
+</div>
+
+<div *ngIf="active_page == 'mailbox'">
+    <div class="container-fluid" style="margin: 3em;">
+        <div class="row content">
+            <div class="col-sm-9">
+                <h4>
+                    <small>RECENT MAILS</small>
+                </h4>
+                <hr>
+                <div *ngFor="let mail of this.mailbox" class="w3-card-4" style="margin-top: 3em">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <h2 class="col-sm-9">{{mail.meno}}</h2>
+                            <h5 class="pull-right col-sm-3"><span class="glyphicon glyphicon-time"></span>{{mail.date}}
+                            </h5>
+                        </div>
+                        <hr>
+                        <p>{{mail.message}}</p>
+                        <p style="text-align: right">{{mail.email}}</p>
+                    </div>
+                </div>
+            </div>
+
+            <div *ngIf="active_page == 'mailbox'" class="col-sm-3 sidenav well">
+                <h4>Email Odbery</h4>
+                <ul class="list-group">
+                    <li class="list-group-item" *ngFor="let mail of this.subscribe">{{mail}}</li>
+                </ul>
+                <br>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div *ngIf="!locker">
+    <div class="fullscreen_bg">
+        <div class="container zarovnanie">
+            <div class="col-lg-4"></div>
+            <div class="col-lg-4">
+                <form class="w3-container w3-card-12 bb">
+                    <div style="padding: 1em">
+                        <label class="w3-text-white"><b>Password</b></label>
+                        <input name="vstup" class="w3-input w3-border w3-light-grey" type="pass_password"
+                               [(ngModel)]="this.vstup">
+                        <hr>
+                        <button (click)="odomkni(this.vstup)" class="w3-btn w3-blue-grey">Odomkni</button>
+                    </div>
+
+                </form>
+
+            </div>
+            <div class="col-lg-4"></div>
+        </div>
+    </div>
+</div>

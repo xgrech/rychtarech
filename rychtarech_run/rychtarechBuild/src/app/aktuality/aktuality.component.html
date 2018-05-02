@@ -1,0 +1,177 @@
+<div class="header-nightsky">
+
+
+    <div *ngIf="!detailView">
+        <app-navigation [actual]="page_name"></app-navigation>
+        <div *ngFor="let akt of this.aktuality; let idx = index" class="container bb" style="margin-bottom: 1.5em">
+            <div class="">
+                <div class="w3-card-4 clicker row" (click)="openDetail(idx)"
+                     style="width: 98%;margin-left: 1.2em; margin-top: 1.5em">
+                    <div class="col-sm-4 col-lg-4">
+                        <img class="img-responsive" style="max-width: 100%"
+                             src="{{akt.titulna_fotka}}" alt="">
+                    </div>
+                    <div class="col-sm-8 col-lg-8">
+                        <h1>{{akt.title}}</h1>
+                        <h4 style="color: #a8a8a8">{{akt.date}}</h4>
+                        <hr>
+                        <p>{{akt.perex}}</p>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="">
+                            <p><span class="pull-right" style="padding: 1em;"><b>Komentáre  </b> <span
+                                    class="w3-tag w3-white">{{pocetComm(akt)}}</span></span></p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div *ngIf="detailView && mobile == true" class="">
+        <button (click)="detailView = false" class="w3 top w3-button w3-border w3-black w3-right">Späť</button>
+    </div>
+
+    <div *ngIf="detailView" class="container bb" style="margin-bottom: 1.5em">
+
+
+
+        <div class="">
+            <div class="w3-card-4"
+                 style="margin-bottom: 3em; margin-top: 1.5em">
+                <div class="row">
+                    <div class="col-sm-12 col-lg-5">
+                        <img class="img-responsive" style="padding: 12px"
+                             src="{{this.aktualita.titulna_fotka}}" alt="">
+                    </div>
+                    <div class="col-sm-12 col-lg-7">
+                        <h2>{{this.aktualita.title}}</h2>
+                        <button (click)="detailView = false" class="w3-button w3-border w3-black w3-right" style="margin-top: -2em">Späť</button>
+
+                        <h4 style="color: #a8a8a8">{{this.aktualita.date}}</h4>
+                        <hr>
+                        <div class="w3-container">
+                            <p>{{this.aktualita.perex}}</p>
+                        </div>
+                    </div>
+                </div>
+                <div class="row" style="margin-top: 7em">
+                    <div class="col-sm-7" style="padding: 1em">
+
+                        <p>{{this.aktualita.obsah[0]}}</p>
+                    </div>
+                    <div class="col-sm-5">
+                        <img class="center img-responsive" src="{{this.aktualita.fotky[0]}}" alt="">
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 2em">
+                    <div class="col-sm-4">
+                        <img class="center img-responsive" src="{{this.aktualita.fotky[1]}}" alt="">
+                    </div>
+                    <div class="col-sm-8" style="padding: 1em">
+
+                        <p>{{this.aktualita.obsah[1]}}</p>
+                    </div>
+                </div>
+
+                <div class="row" style="margin-top: 2em">
+                    <div class="col-sm-8" style="padding: 1em">
+
+                        <p>{{this.aktualita.obsah[2]}}</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <img class="center img-responsive" src="{{this.aktualita.fotky[2]}}" alt="">
+                    </div>
+                </div>
+
+
+
+                <div class="row">
+                    <div class="col-sm-12">
+                        <div class="w3-hide-small">
+                            <p><span class="w3-padding-large pull-right"><b>Komentáre  </b> <span
+                                    class="w3-tag w3-white">{{pocetComm(this.aktualita)}}</span></span></p>
+                        </div>
+                    </div>
+                </div>
+
+
+
+
+
+                <div class="bb2">
+                    <!--komentare-->
+                    <div class="w3-row row">
+                        <div class="w3-col l8 m8 s12">
+                            <div class="w3-col m4 w3-hide-small" style="margin-bottom: 2em">
+                                <h3><span class="w3-padding-small w3-left"
+                                          style="margin-left: 1em"><b>Komentáre:</b></span></h3>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div *ngFor="let comm of this.aktualita.komenty" class="row">
+                        <div class="col-lg-1"></div>
+                        <div class="col-lg-10">
+                            <div class="w3-card-4 w3-white" style="width:100%">
+                                <header class="w3-container w3-light-grey">
+                                    <h3>{{comm.meno}}</h3>
+                                    <p>{{comm.datum}}</p>
+                                </header>
+                                <div class="w3-container" style="padding-bottom: 2em; padding-top: 1em">
+                                    <img src="{{this.avatarFoto(comm)}}" alt="Avatar"
+                                         class="w3-left w3-circle w3-margin-right" style="width:60px">
+                                    <p>{{comm.obsah}}</p><br>
+                                </div>
+                                <!--<button class="w3-button w3-block w3-dark-grey">Like</button>-->
+                            </div>
+                            <br>
+                        </div>
+                    </div>
+
+                    <div class="w3-row row">
+                        <div class="col-lg-1"></div>
+                        <div class="w3-col l10 m10 s12"
+                             style="margin-left: auto;margin-right: auto;position: center">
+                            <form class="w3-container w3-card-4 w3-light-grey w3-text-black w3-margin">
+                                <h2 class="w3-center">Komentujte:</h2>
+
+                                <div class="w3-row w3-section">
+                                    <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-user"></i>
+                                    </div>
+                                    <div class="w3-rest">
+                                        <input class="w3-input w3-border" name="first" type="text"
+                                               placeholder="Meno" required
+                                               [(ngModel)]="this.koment.meno">
+                                    </div>
+                                </div>
+
+                                <div class="w3-row w3-section">
+                                    <div class="w3-col" style="width:50px"><i class="w3-xxlarge fa fa-pencil"></i>
+                                    </div>
+                                    <div class="w3-rest">
+                                        <input class="w3-input w3-border" name="message" type="text"
+                                               placeholder="Správa" required
+                                               [(ngModel)]="this.koment.obsah">
+                                    </div>
+                                </div>
+
+                                <button (click)="saveKoment()"
+                                        class="w3-button w3-block w3-section w3-black w3-ripple w3-padding">Save
+                                </button>
+
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+
+        </div>
+
+
+    </div>
+</div>

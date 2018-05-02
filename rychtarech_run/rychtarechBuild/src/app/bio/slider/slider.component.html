@@ -1,0 +1,24 @@
+<div style="padding-bottom: 2em;">
+    <button class="btn w3-button w3-black w3-border center" (click)="gallery_trigger()">{{this.gallery_status}}</button>
+</div>
+<div *ngIf="show_gallery" class="w3-animate-top">
+    <div class="w3-content w3-display-container well bb " style="padding-top: 2em;padding-bottom: 2em">
+        <img class="mySlides crop w3-animate-top img-responsive" src="{{this.focused_foto}}">
+
+
+        <button class="w3-button w3-white w3-display-left" (click)="predchadzajuca()">&#10094;</button>
+        <button class="w3-button w3-white w3-display-right" (click)="dalsia()">&#10095;</button>
+    </div>
+    <br>
+    <div class="">
+        <div class="w3-content w3-display-container imgbox">
+            <div class="" style="padding-top: 1em; padding-bottom: 1em">
+                <div class="w3-center">
+                    <img *ngFor="let image of this.fotky let idx = index" class="w3-hover-sepia-max"
+                         [ngClass]="{'w3-sepia-max':idx === this.i}" src="{{image}}"
+                         (click)="focus_this(idx)" alt="" style="max-width: 10em;border: solid black">
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

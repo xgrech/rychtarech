@@ -1,0 +1,26 @@
+  <nav class="navbar navbar-default">
+    <div class="container">
+      <a class="navbar-brand">{{actual_page}}</a>
+      <div class="navbar-header">
+        <button (click)="onToogleMenu()" type="button" class="navbar-toggle" data-toggle="collapse" data-target="#myNavbar">
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+      </div>
+      <div [ngClass]="{'collapse': toogleMenu === false}"  class="navbar-collapse w3-animate-right" >
+        <ul class="nav navbar-nav navbar-right">
+
+          <li class="dropdown"><a routerLink="/uvod" [queryParams]="{lang: language}" >{{this.home}}</a></li>
+          <li class="dropdown"><a routerLink="/aktuality" [queryParams]="{lang: language}">{{this.aktuality}}</a></li>
+          <li class="dropdown"><a routerLink="/knihy"  [queryParams]="{lang: language}">{{this.knihy}}</a></li>
+          <li class="dropdown"><a routerLink="/bio" [queryParams]="{lang: language}">{{this.bio}}</a></li>
+          <li class="dropdown"><a routerLink="/blog" [queryParams]="{lang: language}">{{this.blog}}</a></li>
+          <li class="dropdown"><a routerLink="/linky" [queryParams]="{lang: language}">{{this.linky}}</a></li>
+          <li class="dropdown"><a routerLink="/kontakt" [queryParams]="{lang: language}">{{this.kontakt}}</a></li>
+
+        </ul>
+
+      </div>
+    </div>
+  </nav>

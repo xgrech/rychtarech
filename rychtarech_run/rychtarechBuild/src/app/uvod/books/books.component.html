@@ -1,0 +1,52 @@
+<div class="container" style="width: 100%">
+
+    <div style="padding: 3em; padding-bottom: 5em; margin-top: -5em">
+        <div class="zviditelni center">
+            <img class="img-responsive nadpis center" src="../../../assets/uvod/knihy_white_shadow.png" alt="">
+        </div>
+    </div>
+
+    <div class="row" style="padding-bottom: 10em">
+
+        <div class="col-sm-3">
+            <img routerLink="/knihy" class="kniha w3-card-4 wh" src="../../../assets/obalky/nsp.jpg" alt="">
+            <br>
+            <button class="center-block btn btn-default oddel_spod w3-xlarge" (click)="goNaSmrt()">
+                Kúpiť
+            </button>
+        </div>
+        <div class="col-sm-3">
+            <img routerLink="/knihy" class="kniha w3-card-4 wh" src="../../../assets/obalky/slovenky.jpg" alt="">
+            <br>
+            <button class="center-block btn btn-default oddel_spod w3-xlarge"
+                    (click)="goSlovenky()">Kúpiť
+            </button>
+        </div>
+        <div class="col-sm-3">
+            <img routerLink="/knihy" class="kniha w3-card-4 wh" src="../../../assets/obalky/tnm.jpg" alt="">
+            <br>
+            <button class="center-block btn btn-default oddel_spod w3-xlarge"
+                    (click)="goSlovenky()">Kúpiť
+            </button>
+        </div>
+        <div class="col-sm-3">
+            <img *ngIf="this.unknow == false"
+                 class="knihax w3-card-4 wh"
+                 src="../../../assets/obalky/unknow.png"
+                 alt="img">
+
+            <img *ngIf="this.unknow == true" class="knihax w3-card-4 wh w3-animate-opacity"
+                 src="../../../assets/obalky/unknow_opa.png" alt="img"
+                 >
+            <br>
+            <a>
+                <button class="center-block btn btn-default oddel_spod w3-xlarge"
+                        (mouseenter)="this.unknow = true"
+                        (mouseleave)="this.unknow = false"
+                >Zistiť viac
+                </button>
+            </a>
+
+        </div>
+    </div>
+</div>

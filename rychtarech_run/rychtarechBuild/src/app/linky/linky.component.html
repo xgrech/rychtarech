@@ -1,0 +1,30 @@
+<div class="header-nightsky">
+    <app-navigation [actual]="page_name"></app-navigation>
+
+
+    <div *ngFor="let link of this.linky" class="container bb" style="padding: 1.3em; margin-bottom: 1em">
+        <div class="row">
+            <div class="">
+                <div class="col-lg-4">
+                    <img class="img-responsive"
+                         src="{{link.title_foto}}" alt="">
+                </div>
+                <div class="col-lg-8">
+                    <h1>{{this.link.title}}</h1>
+                    <h4 style="color: #a8a8a8">{{this.link.datum}}</h4>
+                    <hr>
+                    <p>{{this.link.obsah}}</p>
+                    <div>
+                        <p class="w3-right" style="margin-right: 2em">
+                            <button (click)="hyperLink(link)"
+                                    class="w3-button w3-padding-large bb w3-border"><b>VIAC »</b>
+                            </button>
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </div>
+
+</div>

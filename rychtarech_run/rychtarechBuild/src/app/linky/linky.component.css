@@ -1,0 +1,12 @@
+.header-nightsky {
+    color: white;
+    background: url("../../assets/linky/back1.jpg") no-repeat;
+    background-size: cover;
+    /*background-position: top;*/
+    padding-bottom: 10px;
+}
+
+.bb {
+    background: rgba(0, 0, 0, 0.5);
+
+}

@@ -1,0 +1,35 @@
+.header-nightsky {
+    color: white;
+    background-color: black;
+    background-size: cover;
+    background-position: top;
+    /*padding-bottom: 30%;*/
+}
+
+.clas1 {
+    background-image: url("../../assets/admin/background.jpg");
+    background-repeat: no-repeat;
+}
+
+.login {
+    background-image: url("../../assets/admin/background.jpg");
+}
+
+.fullscreen_bg {
+    background-image: url("../../assets/admin/background.jpg");
+}
+
+.bb {
+    background: rgba(0, 0, 0, 0.7);
+}
+
+.zarovnanie {
+    padding-top: 17em;
+    padding-bottom: 25%
+}
+@media only screen and (max-width: 720px) {
+    .zarovnanie {
+        padding-top: 3em;
+        padding-bottom: 3em;
+    }
+}

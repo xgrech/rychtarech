@@ -1,0 +1,15 @@
+.center {
+    margin: auto;
+    width: 100%;
+
+    padding: 10px;
+}
+.vyska {
+    max-height: 900px;
+}
+
+.affix {
+    top: 0;
+    width: 100%;
+    z-index: 9999 !important;
+}
