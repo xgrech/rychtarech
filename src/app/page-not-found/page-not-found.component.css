@@ -1,0 +1,7 @@
+.header-nightsky {
+    color: white;
+    background: url("../../assets/forest.jpg") no-repeat;
+    background-size: cover;
+    background-position: top;
+    padding-bottom: 70%;
+}

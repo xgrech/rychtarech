@@ -1,0 +1,51 @@
+<div class="header-nightsky" [ngStyle]="{'padding-bottom': this.mierka + 'px'}" #uvod>
+    <!--[ngStyle]="{'height': this.screenHeight + 'px'}"-->
+    <div #item>
+        <app-navigation [actual]="page_name"></app-navigation>
+    </div>
+    <div class="hero mobile_hero" [ngClass]="{'w3-display-bottommiddle':this.screenWidth > 720}" #bann>
+        <div class="meno w3-animate-right">
+            <h1 class="nadpis1">{{nadpis1}}</h1>
+            <h2 class="nadpis2">{{nadpis2}}</h2>
+        </div>
+    </div>
+</div >
+
+<div class="blacker" style="vertical-align: bottom; background-color: black; min-height: 30px"
+     #blacker></div>
+
+<div class="bgimg-1 bokies" style="background-color: black" #screen>
+    <div class="container" style="width: 85%">
+        <app-books></app-books>
+    </div>
+</div>
+
+<div class="bgimg-2">
+    <div style="vertical-align: bottom; background-color: black; height: 30px"></div>
+    <div style="width: 95%; margin: auto; padding-top: 10em; padding-bottom: 10em">
+        <app-recenzie [referencie]=this.referencie></app-recenzie>
+    </div>
+</div>
+
+<div class="bgimg-3">
+    <div style="vertical-align: bottom; background-color: black; height: 30px"></div>
+    <div class="container" style="padding-top: 3em;padding-bottom: 3em">
+        <div class="row">
+            <div class="col-lg-3"></div>
+            <div class="col-lg-6">
+                <div class="center-block w3-card-12 bb video_obal" style="padding: 1em;">
+                    <iframe class="video img-responsive" [src]="url" frameborder="2" allowfullscreen></iframe>
+                </div>
+
+            </div>
+
+
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
