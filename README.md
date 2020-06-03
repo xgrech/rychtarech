@@ -6,7 +6,7 @@ This project was generated with [Angular CLI](https://github.com/angular/angular
 
 This project is personal face site for bookwriter Richard Rychtarech. 
 
-Site source: http://rychtarech.com/uvod
+Site source: http://rychtarech.com
 
 ## Author 
 
