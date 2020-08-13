@@ -5,6 +5,7 @@ import {Reference} from "./shared/reference.model";
 import {forEach} from "@angular/router/src/utils/collection";
 import {Observable} from "rxjs/Observable";
 import {Clanok} from "./shared/clanok.model";
+import {catchError} from 'rxjs/operators';
 
 
 @Injectable()
@@ -142,6 +143,19 @@ export class ServerService implements OnInit{
             )
             .catch(
                 (error: Response) => {
+                    return Observable.throw('Something went wrong');
+                }
+            );
+    }
+    getElephant() {
+        return this.http.get('https://rychtarech-52017.firebaseio.com/elephant.json')
+            .map(
+                (response: Response) => {
+                    const data = response.json();
+                    return data;
+                }
+            )
+            .catch((error: Response) => {
                     return Observable.throw('Something went wrong');
                 }
             );

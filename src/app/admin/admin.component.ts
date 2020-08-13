@@ -5,6 +5,8 @@ import {Clanok} from "../shared/clanok.model";
 import {Komentar} from "../shared/komentar.model";
 import {Linka} from "../shared/linka.model";
 import {Sprava} from "../shared/message.model";
+import {Buffer} from 'buffer/';
+import * as crypto from 'crypto-browserify';
 
 @Component({
     selector: 'app-admin',
@@ -13,7 +15,10 @@ import {Sprava} from "../shared/message.model";
 })
 export class AdminComponent implements OnInit {
 
-    locker = false;
+    private privateKey: string;
+    private dataKey: string;
+
+    locker = true; // todo prepis na false ked ukoncis deploy
     vstup: string = '';
 
     referencia: Reference = new Reference('', '', '', '', '', '', '', '');
@@ -44,6 +49,10 @@ export class AdminComponent implements OnInit {
 
     mailbox: Sprava[];
     subscribe: string[];
+
+    new_uvod = false;
+
+    fileToUpload: File = null;
 
     constructor(private serverService: ServerService) {
         this.clanky = this.serverService.loadClanky()
@@ -78,7 +87,23 @@ export class AdminComponent implements OnInit {
                 (data: string[]) => this.subscribe = data,
                 (error) => console.log(error),
             )
+        this.serverService.getElephant()
+            .subscribe(
+                (data: any) => {
+                    this.privateKey = data.prv;
+                    this.dataKey = data.pas;
+                },
+                (error) => console.log(error),
+            );
     }
+
+    // upload file
+
+    handleFileInput(files: FileList) {
+        this.fileToUpload = files.item(0);
+    }
+
+
 
     clear_data() {
         this.referencia = new Reference('', '', '', '', '', '', '', '');
@@ -172,7 +197,11 @@ export class AdminComponent implements OnInit {
     }
 
     odomkni(p) {
-        if (p == "admin") this.locker = true;
+        const buffer = new Buffer(p);
+        const encrypted = crypto.privateEncrypt({key: this.privateKey, padding: crypto.constants.RSA_PKCS1_PADDING}, buffer);
+        if (encrypted.toString('base64') == this.dataKey) {
+            this.locker = true;
+        }
         this.vstup = '';
     }
 
@@ -223,7 +252,6 @@ export class AdminComponent implements OnInit {
     }
 
     saveRef() {
-
         this.error = "";
 
         if (!this.edit_mode) {
@@ -244,6 +272,7 @@ export class AdminComponent implements OnInit {
         this.edit_mode = false;
         // this.clear_data();
 
+        this.new_uvod = false;
     }
 
     saveClanok() {

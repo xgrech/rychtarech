@@ -21,15 +21,15 @@ export class FooterComponent implements OnInit {
 
 
     scrollTop() {
-        window.scrollTo(0, 0)
+        window.scrollTo(0, 0);
     }
 
     facebook() {
-        window.open("https://www.facebook.com/knihaslovenky/", "_blank");
+        window.open('https://www.facebook.com/knihaslovenky/', '_blank');
     }
 
     instagram() {
-        window.open("https://www.instagram.com/richardrychtarech/", "_blank");
+        window.open('https://www.instagram.com/richardrychtarech/', '_blank');
     }
 
     snapchat() {

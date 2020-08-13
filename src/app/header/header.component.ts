@@ -1,53 +1,54 @@
 import {Component, ElementRef, Input, OnInit, ViewChild} from '@angular/core';
-import {Output} from "@angular/core";
-import {ServerService} from "../server.service";
-import {ActivatedRoute, Params, Router} from "@angular/router";
-import {routerNgProbeToken} from "@angular/router/src/router_module";
+import {Output} from '@angular/core';
+import {ServerService} from '../server.service';
+import {ActivatedRoute, Params, Router} from '@angular/router';
+
+// import {routerNgProbeToken} from "@angular/router/src/router_module";
 
 @Component({
-  selector: 'app-header',
-  templateUrl: './header.component.html',
-  styleUrls: ['./header.component.css']
+    selector: 'app-header',
+    templateUrl: './header.component.html',
+    styleUrls: ['./header.component.css']
 })
 export class HeaderComponent implements OnInit {
 
-  header_sk = "MODERNÉ, AKČNÉ, FILOZOFICKÉ, EROTICKÉ, SPIRITUÁLNE, PLNOKRVNÉ PRÍBEHY"
-  header_en = "MODERN, ACTION PACKED, PHILOSOPHICAL, EROTIC, SPIRITUAL, REFRESHING STORIES"
-  header_nl = "MODERNE, ACTIEVOLLE, FILOSOFISCHE, EROTISCHE, SPIRITUELE, CLICHÉLOZE VERHALEN"
+    header_sk = 'MODERNÉ, AKČNÉ, FILOZOFICKÉ, EROTICKÉ, PLNOKRVNÉ PRÍBEHY';
+    header_en = 'MODERN, ACTION PACKED, PHILOSOPHICAL, EROTIC, REFRESHING STORIES';
+    header_nl = 'MODERNE, ACTIEVOLLE, FILOSOFISCHE, EROTISCHE, CLICHÉLOZE VERHALEN';
 
-  header:string = "MODERNÉ, AKČNÉ, FILOZOFICKÉ, EROTICKÉ, SPIRITUÁLNE, PLNOKRVNÉ PRÍBEHY"
-  constructor(
-      private serverService:ServerService,
-      private router:Router,
-      private route:ActivatedRoute) { }
+    header: string = 'MODERNÉ, AKČNÉ, FILOZOFICKÉ, EROTICKÉ, PLNOKRVNÉ PRÍBEHY';
 
-  ngOnInit() {
-      this.route.queryParams
-          .subscribe(
-              (queryParams: Params) => {
+    constructor(
+        private serverService: ServerService,
+        private router: Router,
+        private route: ActivatedRoute) {
+    }
 
-                  if (queryParams['lang'] == 'sk') {
-                      this.header = this.header_sk
-                  }
+    ngOnInit() {
+        this.route.queryParams
+            .subscribe(
+                (queryParams: Params) => {
 
-                  if (queryParams['lang'] == 'en') {
-                      this.header = this.header_en
-                  }
+                    if (queryParams['lang'] == 'sk') {
+                        this.header = this.header_sk;
+                    }
 
-                  if (queryParams['lang'] == 'nl') {
-                      this.header = this.header_nl
-                  }
-              }
-          )
-}
+                    if (queryParams['lang'] == 'en') {
+                        this.header = this.header_en;
+                    }
 
-
-  setLanguage(lang) {
-    // console.log(this.router.url)
-      this.router.navigate([this.router.url.split('?')[0]], { queryParams: { lang: lang },});
-  }
+                    if (queryParams['lang'] == 'nl') {
+                        this.header = this.header_nl;
+                    }
+                }
+            );
+    }
 
 
+    setLanguage(lang) {
+        // console.log(this.router.url)
+        this.router.navigate([this.router.url.split('?')[0]], {queryParams: {lang: lang},});
+    }
 
 
 }

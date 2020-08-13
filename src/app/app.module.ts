@@ -18,7 +18,7 @@ import {BooksComponent} from './uvod/books/books.component';
 import {NavigationComponent} from './navigation/navigation.component';
 import {RecenzieComponent} from './uvod/recenzie/recenzie.component';
 import {ServerService} from "./server.service";
-import {FormsModule} from "@angular/forms";
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
 import {HttpModule} from "@angular/http";
 import { FooterComponent } from './footer/footer.component';
 import { KnihovnaComponent } from './knihy/knihovna/knihovna.component';
@@ -66,12 +66,13 @@ const appRoutes: Routes = [
         AdminComponent,
         PageNotFoundComponent,
         SmoothScrollToDirective,
-        SmoothScrollDirective,
+        SmoothScrollDirective
     ],
     imports: [
         BrowserModule,
         RouterModule.forRoot(appRoutes), //registrcia routeru
         FormsModule,
+        ReactiveFormsModule,
         HttpModule,
     ],
     providers: [
